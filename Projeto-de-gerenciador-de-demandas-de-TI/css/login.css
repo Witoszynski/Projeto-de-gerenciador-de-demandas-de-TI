@@ -1,0 +1,80 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* BODY */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f1f5f9;
+}
+
+/* CENTRALIZAÇÃO */
+.centralizado {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* CARD */
+.card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 350px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* TEXTOS */
+.titulo {
+    text-align: center;
+    color: #2563eb;
+}
+
+.subtitulo {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #64748b;
+}
+
+/* FORM */
+.campo {
+    margin-bottom: 15px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* BOTÃO */
+.botao {
+    width: 100%;
+    padding: 10px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.botao:hover {
+    background: #1d4ed8;
+}
+
+/* ERRO */
+.erro {
+    color: red;
+    display: none;
+    margin-bottom: 10px;
+}

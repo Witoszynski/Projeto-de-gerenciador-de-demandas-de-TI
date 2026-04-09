@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Demandas</title>
+
+<link rel="stylesheet" href="dashboard.css">
+<link rel="stylesheet" href="demanda.css">
+<link rel="stylesheet" href="logout.css">
+
+</head>
+
+<body>
+
+<div class="menu-lateral">
+  <h2>TI System</h2>
+  <a href="dashboard.html">Dashboard</a>
+  <a class="ativo" href="#">Demandas</a>
+  <a href="nova-demanda.html">Nova</a>
+  <a href="#" onclick="sair()" class="logout">Sair</a>
+</div>
+
+<div class="conteudo">
+
+<h1>Demandas</h1>
+
+<!-- FILTRO POR PRIORIDADE -->
+<div class="filtros">
+  <label>Filtrar por prioridade:</label>
+
+  <select id="filtroPrioridade" onchange="carregarTabela()">
+    <option value="">Todas</option>
+    <option value="Alta">Alta</option>
+    <option value="Média">Média</option>
+    <option value="Baixa">Baixa</option>
+  </select>
+</div>
+
+<table>
+<thead>
+    <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Descrição</th>
+        <th>Categoria</th>
+        <th>GUT</th>
+        <th>Prioridade</th>
+        <th>Status</th>
+        <th>Data</th>
+        <th>Excluir</th>
+    </tr>
+</thead>
+
+<tbody id="tabelaDemandas"></tbody>
+
+</table>
+
+</div>
+
+<script src="api.js"></script>
+<script src="demandas.js"></script>
+
+</body>
+</html>

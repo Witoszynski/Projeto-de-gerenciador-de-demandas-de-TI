@@ -1,0 +1,76 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f1f5f9;
+}
+
+/* SIDEBAR */
+.menu-lateral {
+    width: 220px;
+    height: 100vh;
+    position: fixed;
+    background: #1e293b;
+    color: white;
+    padding-top: 20px;
+}
+
+.menu-lateral h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.menu-lateral a {
+    display: block;
+    padding: 12px 20px;
+    color: #cbd5f5;
+    text-decoration: none;
+}
+
+.menu-lateral a:hover {
+    background: #0ea5e9;
+}
+
+/* ÁREA PRINCIPAL (ESSA É A CHAVE DO LAYOUT) */
+.area-principal {
+    margin-left: 220px;
+    min-height: 100vh;
+}
+
+/* TOPO PADRÃO */
+.topo {
+    height: 60px;
+    background: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 20px;
+
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* CONTEÚDO */
+.conteudo {
+    padding: 20px;
+}
+
+/* BOTÃO SAIR */
+.botao-sair {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.botao-sair:hover {
+    background: #dc2626;
+}

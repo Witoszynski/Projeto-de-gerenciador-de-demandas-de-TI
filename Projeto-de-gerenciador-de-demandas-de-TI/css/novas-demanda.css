@@ -1,0 +1,233 @@
+/* =========================
+BASE
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    background: #f8fafc;
+    color: #0f172a;
+}
+
+/* =========================
+MENU LATERAL
+========================= */
+.menu-lateral {
+    width: 240px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    background: #0f172a;
+    color: #fff;
+    padding-top: 20px;
+}
+
+.menu-lateral h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.menu-lateral a {
+    display: block;
+    padding: 12px 24px;
+    color: #cbd5f5;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.menu-lateral a:hover,
+.menu-lateral .ativo {
+    background: #2563eb;
+    color: #fff;
+}
+
+/* =========================
+CONTAINER PRINCIPAL (PADRÃO GLOBAL)
+========================= */
+.card-dashboard {
+    max-width: 1100px;
+
+    margin-left: 260px;
+    margin-right: auto;
+    margin-top: 40px;
+
+    padding: 0 32px;
+}
+
+/* =========================
+CARD INTERNO
+========================= */
+.card-dashboard form {
+    background: #ffffff;
+    padding: 32px;
+    border-radius: 16px;
+
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+}
+
+/* =========================
+TÍTULOS
+========================= */
+.titulo {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.subtitulo {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 28px;
+}
+
+/* =========================
+FORMULÁRIO
+========================= */
+#formDemanda {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* =========================
+CAMPOS
+========================= */
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.campo label {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+/* INPUTS PROFISSIONAIS */
+.campo input,
+.campo select,
+.campo textarea {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+/* FOCO PREMIUM */
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* PLACEHOLDER */
+.campo input::placeholder {
+    color: #94a3b8;
+}
+
+/* TEXTAREA */
+.campo textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* =========================
+GRID (PRIORIDADE + CATEGORIA)
+========================= */
+.cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+/* =========================
+ERRO
+========================= */
+.erro {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+/* =========================
+BOTÃO (NÍVEL PRODUTO)
+========================= */
+.botao {
+    margin-top: 16px;
+    padding: 13px;
+
+    background: #2563eb;
+    color: #fff;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* HOVER */
+.botao:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.2);
+}
+
+/* CLICK */
+.botao:active {
+    transform: scale(0.98);
+}
+
+/* =========================
+RESPONSIVO
+========================= */
+@media (max-width: 1024px) {
+    .card-dashboard {
+        margin-left: 240px;
+        padding: 0 24px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .menu-lateral {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .card-dashboard {
+        margin-left: 0;
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .card-dashboard form {
+        padding: 22px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}

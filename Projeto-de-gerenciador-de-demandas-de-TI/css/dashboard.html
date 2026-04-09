@@ -1,0 +1,118 @@
+  <!DOCTYPE html>
+  <html lang="pt-br">
+  <head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+
+<link rel="stylesheet" href="dashboard.css">
+<link rel="stylesheet" href="logout.css">
+  <script src="logout.js"></script>
+  <!-- CHART.JS - biblioteca pronta que cria gráficos automaticamente -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  </head>
+
+  <body>
+
+  <div class="menu-lateral">
+    <h2>TI System</h2>
+    <a class="ativo" href="#">Dashboard</a>
+    <a href="demandas.html">Demandas</a>
+    <a href="nova-demanda.html">Nova</a>
+    <a href="#" onclick="sair()" class="logout">Sair</a>
+  </div>
+
+  <div class="topo">Bem-vindo </div>  
+
+  <div class="conteudo">
+
+  <div class="cards">
+    <div class="card">
+      <h3>Total</h3>
+      <p id="total"></p>
+    </div>
+
+    <div class="card">
+      <h3>Pendentes</h3>
+      <p id="pendentes"></p>
+    </div>
+
+    <div class="card">
+      <h3>Concluídas</h3>
+      <p id="concluidas"></p>
+    </div>
+  </div>
+
+  <div class="grafico">
+    <canvas id="graficoStatus"></canvas>
+  </div>
+
+  </div>
+
+
+  <script src="api.js"></script>
+
+<script>
+// ==========================
+// DASHBOARD
+// =========================
+async function carregarDashboard(){
+    const demandas = await listarDemandas();
+
+    const pendentes = demandas.filter(d => d.status === "Pendente").length;
+    const andamento = demandas.filter(d => d.status === "Em andamento").length;
+    const concluidas = demandas.filter(d => d.status === "Concluído").length;
+
+    document.getElementById("total").innerText = demandas.length;
+    document.getElementById("pendentes").innerText = pendentes;
+    document.getElementById("concluidas").innerText = concluidas;
+
+    // cores do CSS
+    const style = getComputedStyle(document.documentElement);
+    const primary = style.getPropertyValue('--primary').trim();
+    const warning = style.getPropertyValue('--warning').trim();
+    const success = style.getPropertyValue('--success').trim();
+
+    new Chart(document.getElementById("graficoStatus"), {
+        type: "bar",
+        data: {
+            labels: ["Pendente", "Em andamento", "Concluído"],
+            datasets: [{
+                label: "Demandas",
+                data: [pendentes, andamento, concluidas],
+                backgroundColor: [warning, primary, success],
+                borderRadius: 8,
+                borderSkipped: false,
+                barThickness: 40
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: "#0f172a",
+                        font: { weight: "bold" }
+                    }
+                }
+            },
+            scales: {
+                y: { beginAtZero: true, ticks:{ color: "#64748b" }, grid:{ color: "#e2e8f0" } },
+                x: { ticks:{ color: "#64748b" }, grid:{ display:false } }
+            }
+        }
+    });
+}
+
+// BLOQUEIO DE ACESSO
+const tipo = localStorage.getItem("tipoUsuario");
+if(tipo !== "admin"){
+    window.location.replace("login.html");
+}
+
+// INICIALIZA
+carregarDashboard();
+</script>
+  </body>
+  </html>

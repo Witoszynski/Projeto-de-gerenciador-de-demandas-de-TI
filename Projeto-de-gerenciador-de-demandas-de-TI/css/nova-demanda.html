@@ -1,0 +1,84 @@
+  <!DOCTYPE html>
+  <html lang="pt-br">
+  <head>
+      <meta charset="UTF-8">
+      <title>Nova Demanda - TI System</title>
+      <link rel="stylesheet" href="dashboard.css">
+      <link rel="stylesheet" href="novas-demanda.css">
+      <link rel="stylesheet" href="logout.css">
+  </head>
+
+  <body>
+
+  <!-- MENU LATERAL -->
+  <div class="menu-lateral">
+      <h2>TI System</h2>
+
+      <a href="dashboard.html">Dashboard</a>
+      <a class="ativo" href="demandas.html ">Demandas</a>
+      <a href="#" onclick="sair()" class="logout">Sair</a>
+  </div>
+
+      <!-- FORMULÁRIO -->
+      <div class="card-dashboard">
+
+          <h2 class="titulo">Criar Nova Demanda</h2>
+          <p class="subtitulo">Preencha os dados abaixo</p>
+
+          <form id="formDemanda">
+
+              <div class="campo">
+                  <label>Título *</label>
+                  <input type="text" id="titulo" placeholder="Ex: Ajuste no sistema">
+              </div>
+
+              <div class="campo">
+                  <label>Descrição *</label>
+                  <textarea id="descricao" rows="4"></textarea>
+              </div>
+
+              <div class="cards">
+
+                  <div class="campo">
+                      <label>Prioridade *</label>
+                      <select id="prioridade">
+                          <option value="">Selecione</option>
+                          <option>Baixa</option>
+                          <option>Média</option>
+                          <option>Alta</option>
+                      </select>
+                  </div>
+
+                  <div class="campo">
+                      <label>Categoria *</label>
+                      <select id="categoria">
+                          <option value="">Selecione</option>
+                          <option>Suporte</option>
+                          <option>Melhoria</option>
+                          <option>Bug</option>
+                          <option>Infraestrutura</option>
+                      </select>
+                  </div>
+
+              </div>
+
+              <div class="campo">
+                  <label>Prazo *</label>
+                  <input type="date" id="prazo">
+              </div>
+
+              <p id="erro" class="erro"></p>
+
+              <button class="botao">Criar Demanda</button>
+
+          </form>
+
+      </div>
+
+  </div>
+
+  <script src="nova-demanda.js"></script>
+  <script src="logout.js"></script>
+
+  </body>
+  </html>

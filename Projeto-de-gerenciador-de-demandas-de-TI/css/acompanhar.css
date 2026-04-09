@@ -1,0 +1,121 @@
+/* =========================
+CONTAINER
+========================= */
+.container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* TOPO DA PÁGINA */
+.topo-pagina {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.topo-pagina h2 {
+    font-size: 26px;
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.botao-sair {
+    background: #f1f5f9;
+    color: #1e293b;
+    border: 1px solid #cbd5e1;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.botao-sair:hover {
+    background: #e2e8f0;
+}
+
+/* CARD */
+.card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    overflow-x: auto;
+}
+
+/* TABELA */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px 15px;
+    font-size: 14px;
+    color: #334155;
+    text-align: left;
+}
+
+thead {
+    background: #f1f5f9;
+}
+
+th {
+    font-weight: 600;
+    color: #64748b;
+}
+
+tbody tr:nth-child(even) {
+    background: #f9fafb;
+}
+
+tbody tr:hover {
+    background: #f1f5f9;
+}
+
+/* PRIORIDADES */
+.prioridade-alta {
+    color: #dc2626;
+    font-weight: 500;
+}
+
+.prioridade-média {
+    color: #f59e0b;
+    font-weight: 500;
+}
+
+.prioridade-baixa {
+    color: #16a34a;
+    font-weight: 500;
+}
+
+/* BOTÃO EXCLUIR */
+.excluir {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    opacity: 0.6;
+    transition: 0.2s;
+}
+
+.excluir:hover {
+    opacity: 1;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+    .card {
+        padding: 15px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    th, td {
+        white-space: nowrap;
+    }
+}

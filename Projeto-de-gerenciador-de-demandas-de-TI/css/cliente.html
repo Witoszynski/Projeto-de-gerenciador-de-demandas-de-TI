@@ -1,0 +1,76 @@
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+    <meta charset="UTF-8">
+    <title>Nova Solicitação</title>
+    <link rel="stylesheet" href="cliente.css">
+    
+    </head>
+
+    <body>
+
+    <div class="container">
+
+        <div class="topo">
+            <h2>Nova Solicitação</h2>
+            <div>
+                <button onclick="irAcompanhar()">Meus Chamados</button>
+                <button onclick="sair()" class="sair">Sair</button>
+            </div>
+        </div>
+
+        <div class="card">
+
+            <form id="formCliente">
+
+                <div class="campo">
+                    <label>Título</label>
+                    <input id="titulo" required>
+                </div>
+
+                <div class="campo">
+                    <label>Descrição</label>
+                    <textarea id="descricao" required></textarea>
+                </div>
+
+                <div class="campo">
+                    <label>Categoria</label>
+                    <select id="categoria">
+                        <option>Infraestrutura</option>
+                        <option>Software</option>
+                        <option>Acessos</option>
+                        <option>Outros</option>
+                    </select>
+                </div>
+
+                <h3>Tabela GUT</h3>
+
+                <table>
+                    <tr>
+                        <th>Nível</th>
+                        <th>Valor</th>
+                    </tr>
+                    <tr><td>Baixa</td><td>1</td></tr>
+                    <tr><td>Média</td><td>3</td></tr>
+                    <tr><td>Alta</td><td>5</td></tr>
+                </table>
+
+                <div class="grid">
+                    <select id="g"><option value="1">Gravidade Baixa</option><option value="3">Média</option><option value="5">Alta</option></select>
+                    <select id="u"><option value="1">Urgência Baixa</option><option value="3">Média</option><option value="5">Alta</option></select>
+                    <select id="t"><option value="1">Tendência Baixa</option><option value="3">Média</option><option value="5">Alta</option></select>
+                </div>
+
+                <p id="resultado"></p>
+
+                <button class="botao">Enviar Chamado</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="cliente.js"></script>
+    </body>
+    </html>

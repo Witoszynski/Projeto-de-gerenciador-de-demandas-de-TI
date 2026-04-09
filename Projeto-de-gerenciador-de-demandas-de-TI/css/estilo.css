@@ -1,0 +1,300 @@
+        /* =========================
+        RESET GLOBAL
+        ========================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* =========================
+        BODY
+        ========================= */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f1f5f9;
+        }
+        html, body {
+            height: 100%;
+        }
+
+        /* =========================
+        LOGIN / CADASTRO (CARD)
+        ========================= */
+        .card {
+            background: #fff;
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: auto;
+        }
+
+        /* CENTRALIZAÇÃO (LOGIN) */
+        body.centralizado {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* =========================
+        TEXTOS
+        ========================= */
+        .titulo {
+            text-align: center;
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+
+        .subtitulo {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        /* =========================
+        FORMULÁRIOS
+        ========================= */
+        .campo {
+            margin-bottom: 15px;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .campo input,
+        .campo select,
+        .campo textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        /* =========================
+        BOTÕES
+        ========================= */
+        .botao {
+            width: 100%;
+            padding: 10px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .botao:hover {
+            background: #1d4ed8;
+        }
+
+        .botao-sair {
+            margin-left: auto;
+            padding: 8px 15px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .botao-sair:hover {
+            background: #dc2626;
+        }
+
+        /* =========================
+        LINKS
+        ========================= */
+        .link {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .link a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================
+        ERRO
+        ========================= */
+        .erro {
+            color: #dc2626;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: none;
+            font-weight: 500;
+        }
+
+        /* =========================
+        MENU LATERAL (SIDEBAR)
+        ========================= */
+        .menu-lateral {
+            width: 220px;
+            height: 100vh;
+            position: fixed;
+            background: #1e293b;
+            color: white;
+            padding-top: 20px;
+        }
+
+        .menu-lateral h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .menu-lateral a {
+            display: block;
+            padding: 12px 20px;
+            color: #cbd5f5;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .menu-lateral a:hover,
+        .menu-lateral .ativo {
+            background: #0ea5e9;
+            color: white;
+        }
+
+        /* =========================
+        TOPO
+        ========================= */
+            .topo {
+                margin-left: 220px;
+                height: 60px;
+                background: #fff;
+                display: flex;
+                align-items: center;
+                padding: 0 20px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+
+        /* TOPO DAS PÁGINAS INTERNAS (ex: nova demanda) */
+        .topo-pagina {
+            height: 60px;
+            background: #fff;
+            padding: 0 20px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        /* =========================
+        CONTEÚDO PRINCIPAL
+        ========================= */
+        .conteudo {
+            margin-left: 220px;
+            padding: 20px;
+        }
+
+        /* =========================
+        CARDS (DASHBOARD)
+        ========================= */
+        .cards {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-dashboard {
+            flex: 1;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .card-dashboard h3 {
+            margin-bottom: 10px;
+            color: #334155;
+        }
+
+        .card-dashboard p {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0f172a;
+        }
+
+        /* =========================
+        GRÁFICO
+        ========================= */
+        .grafico {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+
+        /* =========================
+        TABELA
+        ========================= */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+        }
+
+        th {
+            background: #e2e8f0;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        /* SELECT STATUS */
+        select {
+            padding: 6px;
+            border-radius: 4px;
+        }
+
+        /* =========================
+        RESPONSIVO
+        ========================= */
+        @media (max-width: 768px) {
+
+            .menu-lateral {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .topo {
+                margin-left: 0;
+            }
+
+            .conteudo {
+                margin-left: 0;
+            }
+
+            .cards {
+                flex-direction: column;
+            }
+        }
+
+    
