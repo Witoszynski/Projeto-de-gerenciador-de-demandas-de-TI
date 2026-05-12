@@ -1,0 +1,54 @@
+/* =========================
+RESET
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+}
+
+/* =========================
+MENU
+========================= */
+.menu-lateral {
+    width: 240px;
+    height: 100vh;
+    position: fixed;
+    background: #0f172a;
+    color: #fff;
+    padding: 20px 0;
+}
+
+.menu-lateral h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.menu-lateral a {
+    display: block;
+    padding: 12px 24px;
+    color: #cbd5f5;
+    text-decoration: none;
+}
+
+.menu-lateral a:hover,
+.menu-lateral .ativo {
+    background: #38bdf8;
+    color: #0f172a;
+}
+
+/* =========================
+CONTEÚDO
+========================= */
+.conteudo {
+    margin-left: 240px;
+    padding: 24px;
+
+    overflow-x: hidden;
+}

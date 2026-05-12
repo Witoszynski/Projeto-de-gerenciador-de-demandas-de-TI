@@ -1,0 +1,148 @@
+* {
+  box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+/* Container principal */
+.container-principal {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  padding: 20px;
+}
+
+.container {
+  width: 500px;
+  background-color: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+/* Header */
+.nav-like {
+  height: 80px;
+  background-color: #ebebeb;
+  color: black; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px;
+}
+
+.nav-like h1 {
+  color:#2563eb;
+}
+
+/* Form */
+.formulario {
+  color: black;
+  background-color: #ebebeb;
+  width: 90%;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+  border-radius: 12px;
+  gap: 14px;
+}
+
+.sub-title {
+  font-size: 15px;
+  margin: 0;
+}
+
+.input-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-grupo {
+  position: relative;
+}
+
+.input-grupo i:not(.mostrar-senha) {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: black;
+}
+
+.input-grupo input {
+  width: 100%;
+  height: 40px;
+  padding: 0 40px;
+  border-radius: 8px;
+  border: none;
+  background: #FFF;
+  color: black;
+}
+
+.input-grupo input::placeholder {
+  color: black;
+}
+
+.input-grupo input:focus {
+  outline: none;
+  border: 1px solid #2563eb;
+}
+
+/* Show password */
+.mostrar-senha {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
+}
+
+.mostrar-senha:hover{
+    color: #1d4ed8
+}
+
+/* Botão */
+button {
+  height: 40px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* Links */
+a {
+  color: #2563eb;
+  font-size: 9pt;
+  text-decoration: none;
+}
+
+.rodape {
+  text-align: center;
+  font-size: 9pt;
+}
+
+/*erro*/
+.erro {
+    color: red;
+    display: none;
+    margin-bottom: 10px;
+}

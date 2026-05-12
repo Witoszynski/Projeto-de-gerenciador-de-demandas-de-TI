@@ -1,0 +1,231 @@
+/* =========================
+VARIÁVEIS DE CORES
+========================= */
+:root {
+    --primary: #2563eb;
+    --bg-body: #f1f5f9;
+    --card-bg: #ffffff;
+    --border: #e2e8f0;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --radius: 10px;
+    --shadow-sm: 0 2px 5px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* =========================
+RESET
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+}
+
+/* =========================
+CONTAINER PRINCIPAL
+========================= */
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* =========================
+TOPO
+========================= */
+.topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.topo h2 {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.topo button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: background 0.3s;
+}
+
+.topo button:hover {
+    opacity: 0.85;
+}
+
+.topo button.sair {
+    background: #f1f5f9;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+}
+
+.topo button:not(.sair) {
+    background: var(--primary);
+    color: white;
+}
+
+/* =========================
+CARD FORMULÁRIO
+========================= */
+.card {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+}
+
+.card h2.titulo {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.card p.subtitulo {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+/* =========================
+CAMPOS DO FORMULÁRIO
+========================= */
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.campo label {
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: var(--text-main);
+}
+
+.campo input,
+.campo textarea,
+.campo select {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: #f9fafb;
+    transition: border 0.2s;
+}
+
+.campo input:focus,
+.campo textarea:focus,
+.campo select:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+/* =========================
+TABELA GUT
+========================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+th, td {
+    padding: 10px 12px;
+    font-size: 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+tbody tr:nth-child(even) {
+    background: #fbfdff;
+}
+
+tbody tr:hover {
+    background: #f1f5f9;
+}
+
+/* =========================
+GRID DE SELECTS GUT
+========================= */
+.grid {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.grid select {
+    flex: 1;
+    background: #f9fafb;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* =========================
+RESULTADO GUT
+========================= */
+#resultado {
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--primary);
+}
+
+/* =========================
+BOTÃO ENVIAR
+========================= */
+button.botao {
+    background: var(--primary);
+    color: white;
+    font-size: 15px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button.botao:hover {
+    background: #1d4ed8;
+}
+
+/* =========================
+RESPONSIVO
+========================= */
+@media (max-width: 768px) {
+    .grid {
+        flex-direction: column;
+    }
+
+    .topo {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .topo button {
+        width: 100%;
+        margin-left: 0;
+    }
+}

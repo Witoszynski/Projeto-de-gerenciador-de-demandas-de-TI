@@ -1,0 +1,180 @@
+/* =========================
+CONTAINER PRINCIPAL (PADRÃO GLOBAL)
+========================= */
+.container-formulario {
+    max-width: 1100px;
+
+    margin-left: 240px;
+    padding: 40px 32px;
+
+    width: calc(100% - 240px);
+}
+
+/* =========================
+CARD INTERNO
+========================= */
+.container-formulario form {
+    background: #ffffff;
+    padding: 32px;
+    border-radius: 16px;
+
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+}
+
+/* =========================
+TÍTULOS
+========================= */
+.titulo {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.subtitulo {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 28px;
+}
+
+/* =========================
+FORMULÁRIO
+========================= */
+#formDemanda {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* =========================
+CAMPOS
+========================= */
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.campo label {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+/* INPUTS PROFISSIONAIS */
+.campo input,
+.campo select,
+.campo textarea {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+/* FOCO PREMIUM */
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* PLACEHOLDER */
+.campo input::placeholder {
+    color: #94a3b8;
+}
+
+/* TEXTAREA */
+.campo textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* =========================
+GRID (PRIORIDADE + CATEGORIA)
+========================= */
+.campos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+/* =========================
+ERRO
+========================= */
+.erro {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+/* =========================
+BOTÃO (NÍVEL PRODUTO)
+========================= */
+.botao {
+    margin-top: 16px;
+    padding: 13px;
+
+    background: #2563eb;
+    color: #fff;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* HOVER */
+.botao:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.2);
+}
+
+/* CLICK */
+.botao:active {
+    transform: scale(0.98);
+}
+
+/* =========================
+RESPONSIVO
+========================= */
+@media (max-width: 1024px) {
+    .container-formulario {
+        margin-left: 240px;
+        padding: 0 24px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .menu-lateral {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .container-formulario {
+        margin-left: 0;
+        padding: 100%;
+        margin-top: 20px;
+    }
+
+    .container-formulario form {
+        padding: 22px;
+    }
+
+    .campos-grid {
+        grid-template-columns: 1fr;
+    }
+}
