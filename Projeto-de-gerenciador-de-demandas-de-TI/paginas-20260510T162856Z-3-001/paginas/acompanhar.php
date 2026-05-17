@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Meus Chamados</title>
-<link rel="stylesheet" href="cliente.css">
-<link rel="stylesheet" href="acompanhar.css">
+<link rel="stylesheet" href="/css-20260510T162854Z-3-001/css/cliente.css">
+<link rel="stylesheet" href="/css-20260510T162854Z-3-001/css/acompanhar.css">
 </head>
 
 <body>
@@ -27,10 +27,12 @@
                 <tr>
                     <th>ID</th>
                     <th>Título</th>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
                     <th>Status</th>
                     <th>Prioridade</th>
-                    <th>GUT</th>
-                    <th>Ações</th>
+                    <th>Prazo</th>
+                    <th>Excluir</th>
                 </tr>
             </thead>
             <tbody id="lista"></tbody>
@@ -39,7 +41,7 @@
 
 </div>
 
-<script src="logout.js"></script>
-<script src="acompanhar.js"></script>
+<script src="/javascript-20260510T162856Z-3-001/javascript/logout.js"></script>
+<script src="/javascript-20260510T162856Z-3-001/javascript/acompanhar.js"></script>
 </body>
 </html>

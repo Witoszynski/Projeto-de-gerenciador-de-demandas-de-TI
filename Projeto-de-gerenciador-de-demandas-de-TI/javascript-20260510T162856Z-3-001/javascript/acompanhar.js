@@ -13,9 +13,13 @@ function carregarChamados() {
             <tr>
                 <td>${c.id}</td>
                 <td>${c.titulo}</td>
+                <td>${c.descricao || "-"}</td>
+                <td>${c.categoria}</td>
                 <td>${c.status}</td>
                 <td class="prioridade-${c.prioridade?.toLowerCase() || 'baixa'}">${c.prioridade || '-'}</td>
-                <td>${c.gut}</td>
+                <td>
+                ${new Date(c.prazo).toLocaleDateString("pt-BR")}
+                </td>
                 <td>
                     <button class="excluir" onclick="excluirChamado(${c.id})" title="Excluir chamado">🗑️</button>
                 </td>
@@ -34,6 +38,9 @@ function excluirChamado(id) {
     carregarChamados();
 }
 
+// ==========================
+// Voltar pro início
+// ==========================
 function voltar(){
     window.location.href = "cliente.html";
 }

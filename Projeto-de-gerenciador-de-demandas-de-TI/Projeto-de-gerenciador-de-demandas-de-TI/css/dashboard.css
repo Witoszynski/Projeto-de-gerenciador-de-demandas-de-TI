@@ -1,0 +1,173 @@
+/* =========================
+VARIÁVEIS
+========================= */
+:root {
+    --primary: #2563eb;
+    --warning: #f59e0b;
+    --success: #16a34a;
+
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+
+    --border: #e2e8f0;
+
+    --shadow-sm: 0 2px 6px rgba(0,0,0,0.05);
+    --shadow-md: 0 8px 20px rgba(0,0,0,0.06);
+
+    --radius: 12px;
+}
+
+/* =========================
+RESET
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+}
+
+/* =========================
+MENU
+========================= */
+.menu-lateral {
+    width: 240px;
+    height: 100vh;
+    position: fixed;
+    background: #0f172a;
+    color: #fff;
+    padding: 20px 0;
+}
+
+.menu-lateral h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.menu-lateral a {
+    display: block;
+    padding: 12px 24px;
+    color: #cbd5f5;
+    text-decoration: none;
+}
+
+.menu-lateral a:hover,
+.menu-lateral .ativo {
+    background: #38bdf8;
+    color: #0f172a;
+}
+
+/* =========================
+CONTEÚDO
+========================= */
+.conteudo {
+    margin-left: 240px;
+    padding: 24px;
+}
+
+/* =========================
+TOPO
+========================= */
+.topo-pagina {
+    height: 60px;
+    background: var(--card-bg);
+    padding: 0 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 20px;
+}
+
+/* =========================
+CARDS
+========================= */
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.card {
+    width: 200px;
+    padding: 20px;
+    border-radius: var(--radius);
+    background: var(--card-bg);
+
+    box-shadow: var(--shadow-md);
+    text-align: center;
+
+    position: relative;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+}
+
+.card:nth-child(1)::before { background: var(--primary); }
+.card:nth-child(2)::before { background: var(--warning); }
+.card:nth-child(3)::before { background: var(--success); }
+
+.card h3 {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.card p {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+/* =========================
+GRÁFICO
+========================= */
+#graficoStatus {
+    width: 100% !important;
+    height: 500px !important;
+    display: block;
+    margin-bottom: 40px;
+}
+
+/* =========================
+RESPONSIVO
+========================= */
+@media (max-width: 768px) {
+    .menu-lateral {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .conteudo {
+        margin-left: 0;
+    }
+
+    .cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* gráfico menor no mobile */
+    #graficoStatus {
+        height: 350px !important;
+    }
+}

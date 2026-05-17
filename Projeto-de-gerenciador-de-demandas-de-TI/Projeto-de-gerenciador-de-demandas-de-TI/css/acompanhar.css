@@ -21,6 +21,20 @@ CONTAINER
     font-weight: 600;
 }
 
+.botao-voltar {
+    background: #2563eb;
+    color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    padding: 8px 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.botao-voltar:hover {
+    background: #1d4ed8;
+}
+
 .botao-sair {
     background: #f1f5f9;
     color: #1e293b;
@@ -48,6 +62,7 @@ CONTAINER
 table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: auto;
 }
 
 th, td {
@@ -55,6 +70,11 @@ th, td {
     font-size: 14px;
     color: #334155;
     text-align: left;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    min-width: 80px;
+    max-width: 250px;
 }
 
 thead {

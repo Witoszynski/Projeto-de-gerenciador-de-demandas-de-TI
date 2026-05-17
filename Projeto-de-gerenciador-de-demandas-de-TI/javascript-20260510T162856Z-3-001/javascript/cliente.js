@@ -1,4 +1,4 @@
-const form = document.getElementById("formDemanda")
+const form = document.getElementById("formCliente");
 
 form.addEventListener("submit", function (e) {
 
@@ -23,7 +23,7 @@ form.addEventListener("submit", function (e) {
         prioridade = "Baixa";
     }
     else if (gut <= 70) {
-        prioridade = "Media"
+        prioridade = "Média"
     }
     else {
         prioridade = "Alta";
@@ -37,13 +37,13 @@ form.addEventListener("submit", function (e) {
         return
     }
 
-    let demandas = JSON.parse(localStorage.getItem("demandas")) || []
+    let chamados = JSON.parse(localStorage.getItem("chamados")) || []
 
-    const novoId = demandas.length > 0
-        ? Math.max(...demandas.map(d => d.id)) + 1
+    const novoId = chamados.length > 0
+        ? Math.max(...chamados.map(d => d.id)) + 1
         : 1;
 
-    const novaDemanda = {
+    const chamado = {
         id: novoId,
         usuario: localStorage.getItem("usuarioLogado"),
         titulo,
@@ -58,14 +58,13 @@ form.addEventListener("submit", function (e) {
         status: "Pendente"
     }
 
-    demandas.push(novaDemanda)
+    chamados.push(chamado);
+    localStorage.setItem("chamados", JSON.stringify(chamados));
 
-    localStorage.setItem("demandas", JSON.stringify(demandas))
+    alert("Chamado criado! ID: " + novoId);
 
-    alert("Demanda criada com sucesso!")
-
-    window.location.href = "dashboard.html"
-})
+    form.reset();
+});
 
 function mostrarErro(msg) {
     const erro = document.getElementById("erro")
@@ -76,4 +75,14 @@ function mostrarErro(msg) {
 function limparErro() {
     const erro = document.getElementById("erro")
     erro.style.display = "none"
+}
+
+function sair() {
+    localStorage.removeItem("usuarioLogado");
+    localStorage.removeItem("tipoUsuario");
+    window.location.replace("login.html");
+}
+
+function irAcompanhar() {
+    window.location.href = "acompanhar.html";
 }

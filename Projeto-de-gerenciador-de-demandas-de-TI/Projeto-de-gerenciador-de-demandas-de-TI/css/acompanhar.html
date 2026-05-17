@@ -14,7 +14,10 @@
     <!-- TOPO -->
     <div class="topo-pagina">
         <h2>Meus Chamados</h2>
+        <div>
+        <button class="botao-voltar" onclick="voltar()">Voltar</button>
         <button class="botao-sair" onclick="sair()">Sair</button>
+        </div>
     </div>
 
     <!-- TABELA DE CHAMADOS -->
@@ -24,10 +27,12 @@
                 <tr>
                     <th>ID</th>
                     <th>Título</th>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
                     <th>Status</th>
                     <th>Prioridade</th>
-                    <th>GUT</th>
-                    <th>Ações</th>
+                    <th>Prazo</th>
+                    <th>Excluir</th>
                 </tr>
             </thead>
             <tbody id="lista"></tbody>

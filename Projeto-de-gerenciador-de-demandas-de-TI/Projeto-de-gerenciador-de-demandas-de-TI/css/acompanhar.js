@@ -35,6 +35,13 @@ function excluirChamado(id) {
 }
 
 // ==========================
+// Voltar pro início
+// ==========================
+function voltar(){
+    window.location.href = "cliente.html";
+}
+
+// ==========================
 // INICIALIZA
 // ==========================
 carregarChamados();
