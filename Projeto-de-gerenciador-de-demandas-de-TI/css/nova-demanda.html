@@ -2,9 +2,9 @@
   <html lang="pt-br">
   <head>
       <meta charset="UTF-8">
-      <title>Nova Demanda - TI System</title>
+      <title>Nova Tarefa - TI System</title>
       <link rel="stylesheet" href="dashboard.css">
-      <link rel="stylesheet" href="novas-demanda.css">
+      <link rel="stylesheet" href="demanda.css">
       <link rel="stylesheet" href="logout.css">
   </head>
 
@@ -15,17 +15,17 @@
       <h2>TI System</h2>
 
       <a href="dashboard.html">Dashboard</a>
-      <a class="ativo" href="demandas.html ">Demandas</a>
+      <a class="ativo" href="tarefas.html">Tarefas</a>
       <a href="#" onclick="sair()" class="logout">Sair</a>
   </div>
 
       <!-- FORMULÁRIO -->
       <div class="card-dashboard">
 
-          <h2 class="titulo">Criar Nova Demanda</h2>
+          <h2 class="titulo">Criar Nova Tarefa</h2>
           <p class="subtitulo">Preencha os dados abaixo</p>
 
-          <form id="formDemanda">
+          <form id="formTarefa">
 
               <div class="campo">
                   <label>Título *</label>
@@ -43,9 +43,11 @@
                       <label>Prioridade *</label>
                       <select id="prioridade">
                           <option value="">Selecione</option>
-                          <option>Baixa</option>
-                          <option>Média</option>
-                          <option>Alta</option>
+                          <option>Muito Baixo</option>
+                          <option>Baixo</option>
+                          <option>Médio</option>
+                          <option>Alto</option>
+                          <option>Muito Alto</option>
                       </select>
                   </div>
 
@@ -62,6 +64,34 @@
 
               </div>
 
+              <div class="cards">
+
+                  <div class="campo">
+                      <label>Impacto *</label>
+                      <select id="impacto">
+                          <option value="">Selecione</option>
+                          <option>Muito Baixo</option>
+                          <option>Baixo</option>
+                          <option>Médio</option>
+                          <option>Alto</option>
+                          <option>Muito Alto</option>
+                      </select>
+                  </div>
+
+                  <div class="campo">
+                      <label>Evolução do Problema *</label>
+                      <select id="evolucao">
+                          <option value="">Selecione</option>
+                          <option>Muito Baixo</option>
+                          <option>Baixo</option>
+                          <option>Médio</option>
+                          <option>Alto</option>
+                          <option>Muito Alto</option>
+                      </select>
+                  </div>
+
+              </div>
+
               <div class="campo">
                   <label>Prazo *</label>
                   <input type="date" id="prazo">
@@ -69,7 +99,7 @@
 
               <p id="erro" class="erro"></p>
 
-              <button class="botao">Criar Demanda</button>
+              <button class="botao" type="submit">Criar Tarefa</button>
 
           </form>
 

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Teste LocalStorage</title>
+    <style>
+        body { font-family: Arial; padding: 20px; max-width: 800px; margin: 0 auto; }
+        .teste { border: 1px solid #ccc; padding: 15px; margin: 10px 0; background: #f9f9f9; border-radius: 5px; }
+        button { padding: 10px 20px; background: #2563eb; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #1d4ed8; }
+        .ok { color: green; font-weight: bold; }
+        .erro { color: red; font-weight: bold; }
+        pre { background: #f0f0f0; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+
+<h1>🧪 Teste de LocalStorage</h1>
+
+<div class="teste">
+    <h3>1. Testar LocalStorage Básico</h3>
+    <button onclick="testarBasico()">Testar</button>
+    <p id="resultado1"></p>
+</div>
+
+<div class="teste">
+    <h3>2. Salvar Chamado de Teste</h3>
+    <button onclick="salvarChamadoTeste()">Salvar Chamado Teste</button>
+    <p id="resultado2"></p>
+</div>
+
+<div class="teste">
+    <h3>3. Listar Todos os Chamados Salvos</h3>
+    <button onclick="listarChamados()">Listar</button>
+    <p id="resultado3"></p>
+    <pre id="dadosChamados"></pre>
+</div>
+
+<div class="teste">
+    <h3>4. Limpar Todos os Chamados</h3>
+    <button onclick="limparTudo()" style="background: #dc2626;">Limpar Tudo</button>
+    <p id="resultado4"></p>
+</div>
+
+<div class="teste">
+    <h3>5. Verificar Usuário Logado</h3>
+    <button onclick="verificarUsuario()">Verificar</button>
+    <p id="resultado5"></p>
+</div>
+
+<div class="teste">
+    <h3>6. Info do Navegador</h3>
+    <button onclick="infoNavegador()">Verificar</button>
+    <pre id="infoNav"></pre>
+</div>
+
+<script>
+function testarBasico() {
+    try {
+        localStorage.setItem("teste", "funcionando");
+        const valor = localStorage.getItem("teste");
+
+        if (valor === "funcionando") {
+            document.getElementById("resultado1").innerHTML = '<span class="ok">✓ LocalStorage ESTÁ FUNCIONANDO</span>';
+        } else {
+            document.getElementById("resultado1").innerHTML = '<span class="erro">✗ Erro ao ler do localStorage</span>';
+        }
+        localStorage.removeItem("teste");
+    } catch(e) {
+        document.getElementById("resultado1").innerHTML = '<span class="erro">✗ ERRO: ' + e.message + '</span>';
+    }
+}
+
+function salvarChamadoTeste() {
+    try {
+        const chamadoTeste = {
+            id: Date.now(),
+            titulo: "Chamado de Teste",
+            descricao: "Este é um chamado de teste",
+            categoria: "Teste",
+            gut: 27,
+            gravidade: 3,
+            urgencia: 3,
+            tendencia: 3,
+            prioridade: "Média",
+            status: "Aberto",
+            usuario: "teste@email.com"
+        };
+
+        let chamados = JSON.parse(localStorage.getItem("chamados")) || [];
+        chamados.push(chamadoTeste);
+        localStorage.setItem("chamados", JSON.stringify(chamados));
+
+        document.getElementById("resultado2").innerHTML = '<span class="ok">✓ Chamado de teste salvo com ID: ' + chamadoTeste.id + '</span>';
+    } catch(e) {
+        document.getElementById("resultado2").innerHTML = '<span class="erro">✗ ERRO: ' + e.message + '</span>';
+    }
+}
+
+function listarChamados() {
+    try {
+        let chamados = JSON.parse(localStorage.getItem("chamados")) || [];
+
+        if (chamados.length === 0) {
+            document.getElementById("resultado3").innerHTML = '<span class="erro">⚠ Nenhum chamado encontrado</span>';
+            document.getElementById("dadosChamados").textContent = "[]";
+        } else {
+            document.getElementById("resultado3").innerHTML = '<span class="ok">✓ ' + chamados.length + ' chamado(s) encontrado(s)</span>';
+            document.getElementById("dadosChamados").textContent = JSON.stringify(chamados, null, 2);
+        }
+    } catch(e) {
+        document.getElementById("resultado3").innerHTML = '<span class="erro">✗ ERRO: ' + e.message + '</span>';
+    }
+}
+
+function limparTudo() {
+    if (!confirm("Tem certeza? Isso vai deletar TODOS os chamados!")) {
+        return;
+    }
+    try {
+        localStorage.removeItem("chamados");
+        document.getElementById("resultado4").innerHTML = '<span class="ok">✓ Todos os chamados foram deletados</span>';
+        document.getElementById("dadosChamados").textContent = "[]";
+    } catch(e) {
+        document.getElementById("resultado4").innerHTML = '<span class="erro">✗ ERRO: ' + e.message + '</span>';
+    }
+}
+
+function verificarUsuario() {
+    try {
+        const usuario = localStorage.getItem("usuarioLogado");
+        const tipo = localStorage.getItem("tipoUsuario");
+
+        if (usuario) {
+            document.getElementById("resultado5").innerHTML = '<span class="ok">✓ Usuário: ' + usuario + ' (Tipo: ' + tipo + ')</span>';
+        } else {
+            document.getElementById("resultado5").innerHTML = '<span class="erro">⚠ Nenhum usuário logado</span>';
+        }
+    } catch(e) {
+        document.getElementById("resultado5").innerHTML = '<span class="erro">✗ ERRO: ' + e.message + '</span>';
+    }
+}
+
+function infoNavegador() {
+    const info = {
+        navegador: navigator.userAgent,
+        localStorage_disponivel: typeof(Storage) !== "undefined",
+        sessionStorage_disponivel: typeof(sessionStorage) !== "undefined",
+        tamanho_localStorage: Object.keys(localStorage).length + " itens",
+        tamanho_total_bytes: JSON.stringify(localStorage).length + " bytes"
+    };
+    document.getElementById("infoNav").textContent = JSON.stringify(info, null, 2);
+}
+
+// Executar verificações ao carregar
+window.addEventListener('load', function() {
+    console.log("Página de teste carregada");
+    testarBasico();
+    listarChamados();
+    verificarUsuario();
+});
+</script>
+
+</body>
+</html>

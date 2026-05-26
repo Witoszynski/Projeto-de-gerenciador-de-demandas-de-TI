@@ -3,7 +3,7 @@
     <head>
     <meta charset="UTF-8">
     <title>Nova Solicitação</title>
-    <link rel="stylesheet" href="/css-20260510T162854Z-3-001/css/cliente.css">
+    <link rel="stylesheet" href="cliente.css">
     
     </head>
 
@@ -21,93 +21,56 @@
 
         <div class="card">
 
-        <form id="formCliente">
+            <form id="formCliente">
 
-          <div class="campo">
-            <label>Título *</label>
-            <input type="text" id="titulo" placeholder="Ex: Ajuste no sistema">
-          </div>
+                <div class="campo">
+                    <label>Título</label>
+                    <input id="titulo" required>
+                </div>
 
-          <div class="campo">
-            <label>Descrição *</label>
-            <textarea id="descricao" rows="4"></textarea>
-          </div>
+                <div class="campo">
+                    <label>Descrição</label>
+                    <textarea id="descricao" required></textarea>
+                </div>
 
-          <div class="campos-grid">
+                <div class="campo">
+                    <label>Categoria</label>
+                    <select id="categoria">
+                        <option>Infraestrutura</option>
+                        <option>Software</option>
+                        <option>Acessos</option>
+                        <option>Outros</option>
+                    </select>
+                </div>
 
-            <div class="campo">
-              <label>Gravidade *</label>
+                <h3>Tabela GUT</h3>
 
-              <select id="gravidade">
-                <option value="">Selecione</option>
-                <option value="1">1 - Muito baixa</option>
-                <option value="2">2 - Baixa</option>
-                <option value="3">3 - Média</option>
-                <option value="4">4 - Alta</option>
-                <option value="5">5 - Crítica</option>
-              </select>
-            </div>
+                <table>
+                    <tr>
+                        <th>Nível</th>
+                        <th>Valor</th>
+                    </tr>
+                    <tr><td>Baixa</td><td>1</td></tr>
+                    <tr><td>Média</td><td>3</td></tr>
+                    <tr><td>Alta</td><td>5</td></tr>
+                </table>
 
-            <div class="campo">
-              <label>Urgência *</label>
+                <div class="grid">
+                    <select id="g"><option value="1">Gravidade Baixa</option><option value="3">Média</option><option value="5">Alta</option></select>
+                    <select id="u"><option value="1">Urgência Baixa</option><option value="3">Média</option><option value="5">Alta</option></select>
+                    <select id="t"><option value="1">Tendência Baixa</option><option value="3">Média</option><option value="5">Alta</option></select>
+                </div>
 
-              <select id="urgencia">
-                <option value="">Selecione</option>
-                <option value="1">1 - Pode esperar</option>
-                <option value="2">2 - Pouco urgente</option>
-                <option value="3">3 - Urgente</option>
-                <option value="4">4 - Muito urgente</option>
-                <option value="5">5 - Imediato</option>
-              </select>
-            </div>
+                <p id="resultado"></p>
 
-            <div class="campo">
-              <label>Tendência *</label>
+                <button class="botao">Enviar Chamado</button>
 
-              <select id="tendencia">
-                <option value="">Selecione</option>
-                <option value="1">1 - Não piora</option>
-                <option value="2">2 - Piora pouco</option>
-                <option value="3">3 - Vai piorar</option>
-                <option value="4">4 - Piora rápido</option>
-                <option value="5">5 - Fora de controle</option>
-              </select>
-            </div>
+            </form>
 
-
-            <div class="campo">
-              <label>Categoria *</label>
-              <select id="categoria">
-                <option value="">Selecione</option>
-                <option>Suporte</option>
-                <option>Melhoria</option>
-                <option>Bug</option>
-                <option>Infraestrutura</option>
-              </select>
-            </div>
-
-          </div>
-
-          <div class="campo">
-            <label>Prazo *</label>
-            <input type="date" id="prazo">
-          </div>
-
-          <p id="erro" class="erro"></p>
-
-          <button class="botao">Enviar chamado</button>
-
-        </form>
-
-      </div>
-
-        <div class="container">
-
-
-        
+        </div>
 
     </div>
 
-    <script src="/javascript-20260510T162856Z-3-001/javascript/cliente.js"></script>
+    <script src="cliente.js"></script>
     </body>
     </html>

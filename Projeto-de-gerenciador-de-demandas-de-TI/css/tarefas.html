@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tarefas</title>
+
+<link rel="stylesheet" href="dashboard.css">
+<link rel="stylesheet" href="demanda.css">
+<link rel="stylesheet" href="logout.css">
+<link rel="stylesheet" href="modal.css">
+
+</head>
+
+<body>
+
+<div class="menu-lateral">
+  <h2>TI System</h2>
+  <a href="dashboard.html">Dashboard</a>
+  <a class="ativo" href="#">Tarefas</a>
+  <a href="#" onclick="sair()" class="logout">Sair</a>
+</div>
+
+<div class="conteudo">
+
+<div class="topo-tarefas">
+  <h1>Tarefas</h1>
+  <button class="botao-nova-tarefa" onclick="abrirModal()">+ Nova Tarefa</button>
+</div>
+
+<!-- FILTRO POR PRIORIDADE -->
+<div class="filtros">
+  <label>Filtrar por prioridade:</label>
+
+  <select id="filtroPrioridade" onchange="carregarTabela()">
+    <option value="">Todas</option>
+    <option value="Alta">Alta</option>
+    <option value="Média">Média</option>
+    <option value="Baixa">Baixa</option>
+  </select>
+</div>
+
+<table>
+<thead>
+    <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Descrição</th>
+        <th>Categoria</th>
+        <th>Prioridade</th>
+        <th>Prazo</th>
+        <th>Status</th>
+        <th>Data</th>
+        <th>Excluir</th>
+    </tr>
+</thead>
+
+<tbody id="tabelaTarefas"></tbody>
+
+</table>
+
+</div>
+
+<!-- MODAL NOVA TAREFA -->
+<div id="modalNovaTarefa" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Criar Nova Tarefa</h2>
+      <button class="modal-close" onclick="fecharModal()">×</button>
+    </div>
+
+    <form id="formTarefa">
+      <div class="campo">
+        <label>Título *</label>
+        <input type="text" id="titulo" placeholder="Ex: Ajuste no sistema" required>
+      </div>
+
+      <div class="campo">
+        <label>Descrição *</label>
+        <textarea id="descricao" rows="4" required></textarea>
+      </div>
+
+      <div class="campos-row">
+        <div class="campo">
+          <label>Prioridade *</label>
+          <select id="prioridade" required>
+            <option value="">Selecione</option>
+            <option>Muito Baixo</option>
+            <option>Baixo</option>
+            <option>Médio</option>
+            <option>Alto</option>
+            <option>Muito Alto</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label>Categoria *</label>
+          <select id="categoria" required>
+            <option value="">Selecione</option>
+            <option>Suporte</option>
+            <option>Melhoria</option>
+            <option>Bug</option>
+            <option>Infraestrutura</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="campos-row">
+        <div class="campo">
+          <label>Impacto *</label>
+          <select id="impacto" required>
+            <option value="">Selecione</option>
+            <option>Muito Baixo</option>
+            <option>Baixo</option>
+            <option>Médio</option>
+            <option>Alto</option>
+            <option>Muito Alto</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label>Evolução do Problema *</label>
+          <select id="evolucao" required>
+            <option value="">Selecione</option>
+            <option>Muito Baixo</option>
+            <option>Baixo</option>
+            <option>Médio</option>
+            <option>Alto</option>
+            <option>Muito Alto</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>Prazo *</label>
+        <input type="date" id="prazo" required>
+      </div>
+
+      <p id="erro" class="erro"></p>
+
+      <div class="modal-buttons">
+        <button type="submit" class="botao-enviar">Salvar Tarefa</button>
+        <button type="button" class="botao-cancelar" onclick="fecharModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="api.js"></script>
+<script src="tarefas.js"></script>
+
+</body>
+</html>

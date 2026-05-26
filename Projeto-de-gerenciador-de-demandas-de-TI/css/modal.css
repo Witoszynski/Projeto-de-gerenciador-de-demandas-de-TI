@@ -1,0 +1,233 @@
+/* =========================
+MODAL
+========================= */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    border-radius: 12px;
+    width: 60%;
+    max-width: 600px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #0f172a;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #64748b;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #0f172a;
+}
+
+#formTarefa {
+    padding: 24px;
+}
+
+.campo {
+    margin-bottom: 20px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #0f172a;
+    font-size: 14px;
+}
+
+.campo input,
+.campo textarea,
+.campo select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    color: #0f172a;
+    transition: border-color 0.2s;
+}
+
+.campo input:focus,
+.campo textarea:focus,
+.campo select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.campo textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.campos-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.erro {
+    display: none;
+    background-color: #fee2e2;
+    color: #dc2626;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    border-left: 4px solid #dc2626;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 20px;
+}
+
+.botao-enviar,
+.botao-cancelar {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.botao-enviar {
+    background-color: #2563eb;
+    color: white;
+}
+
+.botao-enviar:hover {
+    background-color: #1d4ed8;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.botao-cancelar {
+    background-color: #e2e8f0;
+    color: #0f172a;
+}
+
+.botao-cancelar:hover {
+    background-color: #cbd5e1;
+}
+
+/* Botão Nova Tarefa */
+.topo-tarefas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.topo-tarefas h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #0f172a;
+}
+
+.botao-nova-tarefa {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.botao-nova-tarefa:hover {
+    background-color: #1d4ed8;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        max-width: none;
+    }
+
+    .campos-row {
+        grid-template-columns: 1fr;
+    }
+
+    .topo-tarefas {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .botao-nova-tarefa {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .modal-buttons {
+        flex-direction: column-reverse;
+    }
+
+    .botao-enviar,
+    .botao-cancelar {
+        width: 100%;
+    }
+}

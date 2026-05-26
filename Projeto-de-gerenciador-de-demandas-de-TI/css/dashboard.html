@@ -17,8 +17,7 @@
   <div class="menu-lateral">
     <h2>TI System</h2>
     <a class="ativo" href="#">Dashboard</a>
-    <a href="demandas.html">Demandas</a>
-    <a href="nova-demanda.html">Nova</a>
+    <a href="tarefas.html">Tarefas</a>
     <a href="#" onclick="sair()" class="logout">Sair</a>
   </div>
 
@@ -47,12 +46,116 @@
     <canvas id="graficoStatus"></canvas>
   </div>
 
+  <!-- DUAS TABELAS PARALELAS -->
+  <div class="tabelas-container">
+
+    <!-- TABELA CHAMADOS -->
+    <div class="tabela-card">
+      <h3>Chamados</h3>
+      <table class="tabela-mini">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Prioridade</th>
+            <th>Prazo</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaChamados">
+          <tr><td colspan="4" style="text-align: center; color: #999;">Carregando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TABELA TAREFAS -->
+    <div class="tabela-card">
+      <h3>Tarefas</h3>
+      <table class="tabela-mini">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Prioridade</th>
+            <th>Prazo</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaTarefas">
+          <tr><td colspan="4" style="text-align: center; color: #999;">Carregando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
   </div>
 
 
   <script src="api.js"></script>
 
 <script>
+// ==========================
+// FUNÇÕES AUXILIARES
+// =========================
+function calcularTempoRestante(dataPrazo) {
+    const agora = new Date();
+    const prazo = new Date(dataPrazo);
+    const diferenca = prazo - agora;
+
+    if (diferenca < 0) return "⏰ Vencido";
+
+    const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
+
+    if (dias > 0) return `${dias}d ${horas}h`;
+    if (horas > 0) return `${horas}h ${minutos}m`;
+    return `${minutos}m`;
+}
+
+function getPrioridadeColor(prioridade) {
+    if (prioridade === "Alta") return "#dc2626";
+    if (prioridade === "Média") return "#f59e0b";
+    return "#16a34a";
+}
+
+function carregarTabelaChamados() {
+    const chamados = JSON.parse(localStorage.getItem("chamados")) || [];
+    const tbody = document.getElementById("tabelaChamados");
+
+    if (chamados.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #999;">Nenhum chamado</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = chamados.slice(0, 5).map(c => `
+        <tr>
+            <td>${c.id}</td>
+            <td>${c.titulo}</td>
+            <td><span style="color: ${getPrioridadeColor(c.prioridade)}; font-weight: bold;">${c.prioridade || '-'}</span></td>
+            <td>${c.prazo ? calcularTempoRestante(c.prazo) : 'Sem prazo'}</td>
+        </tr>
+    `).join('');
+}
+
+function carregarTabelaTarefas() {
+    const tarefas = JSON.parse(localStorage.getItem("demandas")) || [];
+    const tbody = document.getElementById("tabelaTarefas");
+
+    if (tarefas.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #999;">Nenhuma tarefa</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = tarefas.slice(0, 5).map(t => `
+        <tr>
+            <td>${tarefas.indexOf(t) + 1}</td>
+            <td>${t.titulo}</td>
+            <td><span style="color: ${getPrioridadeColor(t.prioridade)}; font-weight: bold;">${t.prioridade || '-'}</span></td>
+            <td>${t.prazo ? calcularTempoRestante(t.prazo) : 'N/A'}</td>
+        </tr>
+    `).join('');
+}
+
 // ==========================
 // DASHBOARD
 // =========================
@@ -103,6 +206,16 @@ async function carregarDashboard(){
             }
         }
     });
+
+    // Carrega as tabelas
+    carregarTabelaChamados();
+    carregarTabelaTarefas();
+
+    // Atualiza as tabelas a cada 30 segundos
+    setInterval(() => {
+        carregarTabelaChamados();
+        carregarTabelaTarefas();
+    }, 30000);
 }
 
 // BLOQUEIO DE ACESSO

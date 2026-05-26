@@ -43,27 +43,26 @@
                     </select>
                 </div>
 
-                <h3>Tabela GUT</h3>
-
-                <table>
-                    <tr>
-                        <th>Nível</th>
-                        <th>Valor</th>
-                    </tr>
-                    <tr><td>Baixa</td><td>1</td></tr>
-                    <tr><td>Média</td><td>3</td></tr>
-                    <tr><td>Alta</td><td>5</td></tr>
-                </table>
+                <h3>Grau de Urgência</h3>
 
                 <div class="grid">
-                    <select id="g"><option value="1">Gravidade Baixa</option><option value="3">Média</option><option value="5">Alta</option></select>
-                    <select id="u"><option value="1">Urgência Baixa</option><option value="3">Média</option><option value="5">Alta</option></select>
-                    <select id="t"><option value="1">Tendência Baixa</option><option value="3">Média</option><option value="5">Alta</option></select>
+                    <div class="campo-select">
+                        <label>Impacto</label>
+                        <select id="g"><option value="1">Baixa</option><option value="3">Média</option><option value="5">Alta</option></select>
+                    </div>
+                    <div class="campo-select">
+                        <label>Prioridade</label>
+                        <select id="u"><option value="1">Baixa</option><option value="3">Média</option><option value="5">Alta</option></select>
+                    </div>
+                    <div class="campo-select">
+                        <label>Evolução do Problema</label>
+                        <select id="t"><option value="1">Baixa</option><option value="3">Média</option><option value="5">Alta</option></select>
+                    </div>
                 </div>
 
                 <p id="resultado"></p>
 
-                <button class="botao">Enviar Chamado</button>
+                <button type="submit" class="botao">Enviar Chamado</button>
 
             </form>
 

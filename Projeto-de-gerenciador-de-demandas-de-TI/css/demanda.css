@@ -92,6 +92,41 @@ CONTEÚDO
     margin-bottom: 20px;
 }
 
+/* TOPO COM BOTÃO NOVA TAREFA */
+.topo-tarefas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.topo-tarefas h1 {
+    margin: 0;
+    font-size: 28px;
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.botao-nova-tarefa {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.botao-nova-tarefa:hover {
+    background-color: #1d4ed8;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
 /* FILTROS */
 .filtros {
     display: flex;
@@ -159,8 +194,8 @@ td:nth-child(1) { width: 60px; color: var(--text-muted); } /* ID */
 td:nth-child(2) { font-weight: 500; } /* Título */
 td:nth-child(3) { max-width: 300px; word-break: break-word; color: var(--text-muted); } /* Descrição */
 td:nth-child(4) { text-align: center; } /* Categoria */
-td:nth-child(5) { text-align: center; } /* GUT */
-td:nth-child(6) { text-align: center; } /* Prioridade */
+td:nth-child(5) { text-align: center; } /* Prioridade */
+td:nth-child(6) { text-align: center; } /* Prazo */
 td:nth-child(7) { text-align: center; } /* Status */
 td:nth-child(8) { text-align: center; } /* Data */
 td:nth-child(9) { text-align: center; } /* Botão excluir */
@@ -205,4 +240,15 @@ BOTÃO DE EXCLUIR
     .filtros { flex-direction: column; align-items: flex-start; }
     table { display: block; overflow-x: auto; }
     th, td { white-space: nowrap; }
+
+    .topo-tarefas {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .botao-nova-tarefa {
+        width: 100%;
+        justify-content: center;
+    }
 }
