@@ -1,86 +1,120 @@
 // ==========================
-// LISTAR E GERENCIAR DEMANDAS
-// =========================
-async function listarDemandas(){
-    return JSON.parse(localStorage.getItem("demandas")) || [];
+// LISTAR E GERENCIAR CHAMADOS
+// ==========================
+async function listarChamados() {
+    return JSON.parse(localStorage.getItem("chamados")) || [];
 }
 
-async function salvarDemandas(lista){
-    localStorage.setItem("demandas", JSON.stringify(lista));
+async function salvarChamados(lista) {
+    localStorage.setItem("chamados", JSON.stringify(lista));
+}
+
+// ==========================
+// CARREGAR BOTÕES DE CHAMADOS
+// ==========================
+async function carregarBotoesChamados() {
+    const lista = await listarChamados();
+    const grid = document.getElementById("chamadosGrid");
+
+    if (!grid) return;
+
+    if (lista.length === 0) {
+        grid.innerHTML = '<p class="vazio">Nenhum chamado criado ainda</p>';
+        return;
+    }
+
+    grid.innerHTML = "";
+    lista.forEach(chamado => {
+        const botao = document.createElement("button");
+        botao.className = "botao-chamado";
+        botao.textContent = chamado.titulo;
+        botao.onclick = () => abrirModal(chamado);
+        grid.appendChild(botao);
+    });
 }
 
 // ==========================
 // CARREGAR TABELA
-// =========================
-async function carregarTabela(){
-    const lista = await listarDemandas();
-    const tabela = document.getElementById("tabelaDemandas");
-    if(!tabela) return;
+// ==========================
+async function carregarTabela() {
+    const lista = await listarChamados();
+    const tabela = document.getElementById("tabelaChamados");
 
-    const filtro = document.getElementById("filtroPrioridade")?.value;
+    if (!tabela) return;
+
+    if (lista.length === 0) {
+        tabela.innerHTML = '<tr><td colspan="4" class="vazio">Nenhum chamado criado ainda</td></tr>';
+        return;
+    }
+
     tabela.innerHTML = "";
-
-    const filtradas = lista.filter(d => {
-        if(!filtro) return true;
-        return d.prioridade === filtro;
-    });
-
-    filtradas.forEach(d => {
+    lista.forEach(chamado => {
         tabela.innerHTML += `
-            <tr>
-                <td>${d.id}</td>
-                <td>${d.titulo}</td>
-                <td>${d.descricao || "-"}</td>
-                <td>${d.categoria}</td>
-                <td class="gut">${d.gut}</td>
-                <td class="prioridade-${d.prioridade.toLowerCase()}">${d.prioridade}</td>
-                <td style="text-align:center;">
-                    <select onchange="mudarStatus(${d.id}, this.value)">
-                        <option ${d.status==="Pendente"?"selected":""}>Pendente</option>
-                        <option ${d.status==="Em andamento"?"selected":""}>Em andamento</option>
-                        <option ${d.status==="Concluído"?"selected":""}>Concluído</option>
-                    </select>
-                </td>
-                <td>${d.data || new Date().toLocaleDateString()}</td>
-                <td style="text-align:center;">
-                    <button class="botao-excluir" onclick="excluirDemanda(${d.id})"></button>
-                </td>
+            <tr onclick="abrirModal({id:'${chamado.id}', titulo:'${chamado.titulo.replace(/'/g, "\\'")}', descricao:'${chamado.descricao.replace(/'/g, "\\'")}', categoria:'${chamado.categoria}', urgencia:'${chamado.urgencia}', status:'${chamado.status}', data:'${chamado.data}'})" style="cursor: pointer;">
+                <td>${chamado.titulo}</td>
+                <td>${chamado.descricao}</td>
+                <td>${chamado.categoria}</td>
+                <td>${chamado.urgencia}</td>
             </tr>
         `;
     });
 }
 
 // ==========================
-// MUDAR STATUS
-// =========================
-async function mudarStatus(id, status){
-    const lista = await listarDemandas();
-    const item = lista.find(d => d.id === id);
-    if(item){
-        item.status = status;
-        await salvarDemandas(lista);
-        carregarTabela();
-    }
+// ABRIR MODAL
+// ==========================
+function abrirModal(chamado) {
+    const modal = document.getElementById("modalDetalhes");
+    document.getElementById("modalTitulo").textContent = chamado.titulo;
+    document.getElementById("modalDescricao").textContent = chamado.descricao;
+    document.getElementById("modalCategoria").textContent = chamado.categoria;
+    document.getElementById("modalUrgencia").textContent = chamado.urgencia;
+    document.getElementById("modalStatus").textContent = chamado.status || "Pendente";
+    document.getElementById("modalData").textContent = chamado.data;
+    modal.style.display = "block";
 }
 
 // ==========================
-// EXCLUIR DEMANDA
-// =========================
-async function excluirDemanda(id){
-    let lista = await listarDemandas();
-    lista = lista.filter(d => d.id !== id);
-    await salvarDemandas(lista);
-    carregarTabela();
+// FECHAR MODAL
+// ==========================
+function fecharModal() {
+    const modal = document.getElementById("modalDetalhes");
+    modal.style.display = "none";
+}
+
+// ==========================
+// MUDAR ABA
+// ==========================
+function mostrarAba(nomeAba) {
+    const abas = document.querySelectorAll(".tab-content");
+    const botoes = document.querySelectorAll(".tab-button");
+
+    abas.forEach(aba => aba.classList.remove("active"));
+    botoes.forEach(botao => botao.classList.remove("active"));
+
+    document.getElementById(nomeAba).classList.add("active");
+    event.target.classList.add("active");
 }
 
 // ==========================
 // BOTÃO DE SAIR
-// =========================
-function sair(){
+// ==========================
+function sair() {
     localStorage.removeItem("usuarioLogado");
     localStorage.removeItem("tipoUsuario");
     window.location.replace("login.html");
 }
 
+// ==========================
+// FECHA MODAL AO CLICAR FORA
+// ==========================
+window.onclick = function(event) {
+    const modal = document.getElementById("modalDetalhes");
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+}
+
 // INICIALIZA
+carregarBotoesChamados();
 carregarTabela();

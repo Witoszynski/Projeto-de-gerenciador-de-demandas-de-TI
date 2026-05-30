@@ -1,114 +1,74 @@
-  <!DOCTYPE html>
-  <html lang="pt-br">
-  <head>
-      <meta charset="UTF-8">
-      <title>Nova Tarefa - TI System</title>
-      <link rel="stylesheet" href="dashboard.css">
-      <link rel="stylesheet" href="demanda.css">
-      <link rel="stylesheet" href="logout.css">
-  </head>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Solicitação - TI System</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="demanda.css">
+    <link rel="stylesheet" href="logout.css">
+    <link rel="stylesheet" href="novas-demanda.css">
+</head>
 
-  <body>
+<body>
 
-  <!-- MENU LATERAL -->
-  <div class="menu-lateral">
-      <h2>TI System</h2>
+<!-- MENU LATERAL -->
+<div class="menu-lateral">
+    <h2>TI System</h2>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="demandas.html">Meus Chamados</a>
+    <a class="ativo" href="#">Nova Solicitação</a>
+    <a href="#" onclick="sair()" class="logout">Sair</a>
+</div>
 
-      <a href="dashboard.html">Dashboard</a>
-      <a class="ativo" href="tarefas.html">Tarefas</a>
-      <a href="#" onclick="sair()" class="logout">Sair</a>
-  </div>
+<!-- FORMULÁRIO -->
+<div class="conteudo">
+    <div class="card-dashboard">
+        <h2 class="titulo">Nova Solicitação</h2>
+        <p class="subtitulo">Preencha os campos obrigatórios</p>
 
-      <!-- FORMULÁRIO -->
-      <div class="card-dashboard">
+        <form id="formSolicitacao">
+            <div class="campo">
+                <label>Título *</label>
+                <input type="text" id="titulo" placeholder="Ex: Problema com acesso ao sistema" required>
+            </div>
 
-          <h2 class="titulo">Criar Nova Tarefa</h2>
-          <p class="subtitulo">Preencha os dados abaixo</p>
+            <div class="campo">
+                <label>Descrição *</label>
+                <textarea id="descricao" rows="5" placeholder="Descreva o problema em detalhes" required></textarea>
+            </div>
 
-          <form id="formTarefa">
+            <div class="cards">
+                <div class="campo">
+                    <label>Categoria *</label>
+                    <select id="categoria" required>
+                        <option value="">Selecione</option>
+                        <option>Suporte</option>
+                        <option>Melhoria</option>
+                        <option>Bug</option>
+                        <option>Infraestrutura</option>
+                    </select>
+                </div>
 
-              <div class="campo">
-                  <label>Título *</label>
-                  <input type="text" id="titulo" placeholder="Ex: Ajuste no sistema">
-              </div>
+                <div class="campo">
+                    <label>Grau de Urgência *</label>
+                    <select id="urgencia" required>
+                        <option value="">Selecione</option>
+                        <option>Baixa</option>
+                        <option>Média</option>
+                        <option>Alta</option>
+                    </select>
+                </div>
+            </div>
 
-              <div class="campo">
-                  <label>Descrição *</label>
-                  <textarea id="descricao" rows="4"></textarea>
-              </div>
+            <p id="erro" class="erro"></p>
 
-              <div class="cards">
+            <button class="botao" type="submit">Enviar Chamado</button>
+        </form>
+    </div>
+</div>
 
-                  <div class="campo">
-                      <label>Prioridade *</label>
-                      <select id="prioridade">
-                          <option value="">Selecione</option>
-                          <option>Muito Baixo</option>
-                          <option>Baixo</option>
-                          <option>Médio</option>
-                          <option>Alto</option>
-                          <option>Muito Alto</option>
-                      </select>
-                  </div>
+<script src="nova-demanda.js"></script>
+<script src="logout.js"></script>
 
-                  <div class="campo">
-                      <label>Categoria *</label>
-                      <select id="categoria">
-                          <option value="">Selecione</option>
-                          <option>Suporte</option>
-                          <option>Melhoria</option>
-                          <option>Bug</option>
-                          <option>Infraestrutura</option>
-                      </select>
-                  </div>
-
-              </div>
-
-              <div class="cards">
-
-                  <div class="campo">
-                      <label>Impacto *</label>
-                      <select id="impacto">
-                          <option value="">Selecione</option>
-                          <option>Muito Baixo</option>
-                          <option>Baixo</option>
-                          <option>Médio</option>
-                          <option>Alto</option>
-                          <option>Muito Alto</option>
-                      </select>
-                  </div>
-
-                  <div class="campo">
-                      <label>Evolução do Problema *</label>
-                      <select id="evolucao">
-                          <option value="">Selecione</option>
-                          <option>Muito Baixo</option>
-                          <option>Baixo</option>
-                          <option>Médio</option>
-                          <option>Alto</option>
-                          <option>Muito Alto</option>
-                      </select>
-                  </div>
-
-              </div>
-
-              <div class="campo">
-                  <label>Prazo *</label>
-                  <input type="date" id="prazo">
-              </div>
-
-              <p id="erro" class="erro"></p>
-
-              <button class="botao" type="submit">Criar Tarefa</button>
-
-          </form>
-
-      </div>
-
-  </div>
-
-  <script src="nova-demanda.js"></script>
-  <script src="logout.js"></script>
-
-  </body>
-  </html>
+</body>
+</html>

@@ -2,12 +2,181 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Demandas</title>
+<title>Meus Chamados</title>
 
 <link rel="stylesheet" href="dashboard.css">
 <link rel="stylesheet" href="demanda.css">
 <link rel="stylesheet" href="logout.css">
+<style>
+    .secao-chamados {
+        margin-bottom: 40px;
+    }
 
+    .chamados-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .botao-chamado {
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left;
+        transition: transform 0.2s, box-shadow 0.2s;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .botao-chamado:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 30px;
+        border: 1px solid #888;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+        margin: 0;
+    }
+
+    .close-modal {
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+    }
+
+    .close-modal:hover {
+        color: black;
+    }
+
+    .modal-field {
+        margin-bottom: 15px;
+    }
+
+    .modal-field label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .modal-field p {
+        margin: 0;
+        padding: 10px;
+        background: #f5f5f5;
+        border-radius: 4px;
+        color: #555;
+    }
+
+    .tabela-container {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+    }
+
+    thead {
+        background-color: #667eea;
+        color: white;
+    }
+
+    th {
+        padding: 15px;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    .vazio {
+        text-align: center;
+        padding: 30px;
+        color: #999;
+        font-size: 16px;
+    }
+
+    .tab-buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .tab-button {
+        padding: 10px 20px;
+        background-color: #f0f0f0;
+        border: 2px solid transparent;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s;
+    }
+
+    .tab-button.active {
+        background-color: #667eea;
+        color: white;
+        border-color: #667eea;
+    }
+
+    .tab-button:hover {
+        background-color: #667eea;
+        color: white;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+</style>
 </head>
 
 <body>
@@ -15,46 +184,83 @@
 <div class="menu-lateral">
   <h2>TI System</h2>
   <a href="dashboard.html">Dashboard</a>
-  <a class="ativo" href="#">Demandas</a>
-  <a href="nova-demanda.html">Nova</a>
+  <a class="ativo" href="#">Meus Chamados</a>
+  <a href="nova-demanda.html">Nova Solicitação</a>
   <a href="#" onclick="sair()" class="logout">Sair</a>
 </div>
 
 <div class="conteudo">
 
-<h1>Demandas</h1>
+<h1>Meus Chamados</h1>
 
-<!-- FILTRO POR PRIORIDADE -->
-<div class="filtros">
-  <label>Filtrar por prioridade:</label>
-
-  <select id="filtroPrioridade" onchange="carregarTabela()">
-    <option value="">Todas</option>
-    <option value="Alta">Alta</option>
-    <option value="Média">Média</option>
-    <option value="Baixa">Baixa</option>
-  </select>
+<div class="tab-buttons">
+  <button class="tab-button active" onclick="mostrarAba('botoes')">Botões de Chamados</button>
+  <button class="tab-button" onclick="mostrarAba('tabela')">Lista de Chamados</button>
 </div>
 
-<table>
-<thead>
-    <tr>
-        <th>ID</th>
-        <th>Título</th>
-        <th>Descrição</th>
-        <th>Categoria</th>
-        <th>GUT</th>
-        <th>Prioridade</th>
-        <th>Status</th>
-        <th>Data</th>
-        <th>Excluir</th>
-    </tr>
-</thead>
+<!-- ABA 1: BOTÕES DE CHAMADOS -->
+<div id="botoes" class="tab-content active">
+  <div class="secao-chamados">
+    <h2>Seus Chamados</h2>
+    <div class="chamados-grid" id="chamadosGrid">
+      <p class="vazio">Nenhum chamado criado ainda</p>
+    </div>
+  </div>
+</div>
 
-<tbody id="tabelaDemandas"></tbody>
+<!-- ABA 2: TABELA DE CHAMADOS -->
+<div id="tabela" class="tab-content">
+  <div class="tabela-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Descrição</th>
+          <th>Categoria</th>
+          <th>Grau de Urgência</th>
+        </tr>
+      </thead>
+      <tbody id="tabelaChamados">
+        <tr><td colspan="4" class="vazio">Nenhum chamado criado ainda</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-</table>
+</div>
 
+<!-- MODAL DE DETALHES -->
+<div id="modalDetalhes" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Detalhes do Chamado</h2>
+      <button class="close-modal" onclick="fecharModal()">&times;</button>
+    </div>
+    <div class="modal-field">
+      <label>Título</label>
+      <p id="modalTitulo"></p>
+    </div>
+    <div class="modal-field">
+      <label>Descrição</label>
+      <p id="modalDescricao"></p>
+    </div>
+    <div class="modal-field">
+      <label>Categoria</label>
+      <p id="modalCategoria"></p>
+    </div>
+    <div class="modal-field">
+      <label>Grau de Urgência</label>
+      <p id="modalUrgencia"></p>
+    </div>
+    <div class="modal-field">
+      <label>Status</label>
+      <p id="modalStatus"></p>
+    </div>
+    <div class="modal-field">
+      <label>Data</label>
+      <p id="modalData"></p>
+    </div>
+  </div>
 </div>
 
 <script src="api.js"></script>
