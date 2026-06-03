@@ -2,6 +2,17 @@ const express = require('express');
 const db = require('../server');
 const checarToken = require('../middleware/auth');
 const router = express.Router();
+const { encryptDoubleDES, decryptDoubleDES } = require('../utils/crypto');
+
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || 'default-key-change-in-production-64bit';
+
+// Descriptografar dados de demandas
+function descriptografarDemanda(demanda) {
+  if (demanda.descricao) {
+    demanda.descricao = decryptDoubleDES(demanda.descricao, ENCRYPTION_KEY) || demanda.descricao;
+  }
+  return demanda;
+}
 
 // GET - Listar todas demandas
 router.get('/', checarToken, function(req, res) {
@@ -10,71 +21,61 @@ router.get('/', checarToken, function(req, res) {
   db.query(sql, function(erro, resultados) {
     if (erro) {
       console.log(erro);
-      return res.json({ ok: false, msg: 'erro ao listar' });
+      return res.status(500).json({ ok: false, msg: 'erro ao listar' });
     }
 
-    res.json(resultados);
+    // Descriptografar cada demanda
+    const demandas = resultados.map(d => descriptografarDemanda(d));
+    res.json(demandas);
   });
 });
 
 // POST - Criar demanda
 router.post('/', checarToken, function(req, res) {
   let titulo = req.body.titulo;
-  let descricao = req.body.descricao;
-  let status = req.body.status;
-  let prioridade = req.body.prioridade;
-  let usuario_id = req.body.usuario_id;
+  let descricao = req.body.descricao || '';
+  let status = req.body.status || 'aberta';
+  let prioridade = req.body.prioridade || 'media';
+  let usuario_id = req.idDoUsuario; // Usar do token, não do corpo
 
-  // Validação confusa
-  if (!titulo || titulo == '' || titulo == null) {
-    return res.json({ ok: false, msg: 'titulo vazio' });
+  if (!titulo || titulo === '') {
+    return res.status(400).json({ ok: false, msg: 'titulo nao fornecido ou vazio' });
   }
 
-  // Valores padrão confusos
-  let st = status;
-  if (st == null || st == undefined || st == '') {
-    st = 'aberta';
-  }
+  // Criptografar descrição
+  const descricaoCriptografada = encryptDoubleDES(descricao, ENCRYPTION_KEY);
 
-  let pr = prioridade;
-  if (pr == null || pr == undefined || pr == '') {
-    pr = 'media';
-  }
+  // Usar prepared statement
+  let sqlInserir = "INSERT INTO demandas (titulo, descricao, status, prioridade, usuario_id) VALUES (?, ?, ?, ?, ?)";
 
-  let desc = descricao;
-  if (desc == null) {
-    desc = '';
-  }
-
-  // SQL Injection
-  let sqlInserir = "INSERT INTO demandas (titulo, descricao, status, prioridade, usuario_id) VALUES ('" + titulo + "', '" + desc + "', '" + st + "', '" + pr + "', " + usuario_id + ")";
-
-  db.query(sqlInserir, function(erro, resultado) {
+  db.query(sqlInserir, [titulo, descricaoCriptografada, status, prioridade, usuario_id], function(erro, resultado) {
     if (erro) {
       console.log('erro: ' + erro);
-      return res.json({ ok: false, msg: 'erro ao criar' });
+      return res.status(500).json({ ok: false, msg: 'erro ao criar demanda' });
     }
 
-    res.json({ ok: true, msg: 'demanda criada' });
+    res.status(201).json({ ok: true, msg: 'demanda criada', demanda_id: resultado.insertId });
   });
 });
 
 // GET - Buscar demanda por ID
 router.get('/:id', checarToken, function(req, res) {
   let id = req.params.id;
-  let sqlBuscar = 'SELECT * FROM demandas WHERE id = ' + id;
+  let sqlBuscar = 'SELECT * FROM demandas WHERE id = ?';
 
-  db.query(sqlBuscar, function(erro, resultado) {
+  db.query(sqlBuscar, [id], function(erro, resultado) {
     if (erro) {
       console.log(erro);
-      return res.json({ ok: false });
+      return res.status(500).json({ ok: false, msg: 'erro ao buscar' });
     }
 
     if (resultado.length === 0) {
-      return res.status(404).json({ msg: 'demanda nao encontrada' });
+      return res.status(404).json({ ok: false, msg: 'demanda nao encontrada' });
     }
 
-    res.json(resultado[0]);
+    // Descriptografar demanda
+    const demanda = descriptografarDemanda(resultado[0]);
+    res.json(demanda);
   });
 });
 
@@ -82,35 +83,50 @@ router.get('/:id', checarToken, function(req, res) {
 router.put('/:id', checarToken, function(req, res) {
   let id = req.params.id;
   let titulo = req.body.titulo;
-  let descricao = req.body.descricao;
+  let descricao = req.body.descricao || '';
   let status = req.body.status;
   let prioridade = req.body.prioridade;
 
-  // SQL Injection
-  let sqlAtualizar = "UPDATE demandas SET titulo = '" + titulo + "', descricao = '" + descricao + "', status = '" + status + "', prioridade = '" + prioridade + "' WHERE id = " + id;
+  if (!titulo || titulo === '') {
+    return res.status(400).json({ ok: false, msg: 'titulo nao fornecido ou vazio' });
+  }
 
-  db.query(sqlAtualizar, function(erro, resultado) {
+  // Criptografar descrição
+  const descricaoCriptografada = encryptDoubleDES(descricao, ENCRYPTION_KEY);
+
+  // Usar prepared statement
+  let sqlAtualizar = "UPDATE demandas SET titulo = ?, descricao = ?, status = ?, prioridade = ? WHERE id = ?";
+
+  db.query(sqlAtualizar, [titulo, descricaoCriptografada, status, prioridade, id], function(erro, resultado) {
     if (erro) {
       console.log(erro);
-      return res.json({ ok: false, msg: 'erro ao atualizar' });
+      return res.status(500).json({ ok: false, msg: 'erro ao atualizar' });
     }
 
-    res.json({ ok: true, msg: 'atualizado com sucesso' });
+    if (resultado.affectedRows === 0) {
+      return res.status(404).json({ ok: false, msg: 'demanda nao encontrada' });
+    }
+
+    res.json({ ok: true, msg: 'demanda atualizada com sucesso' });
   });
 });
 
 // DELETE - Deletar demanda
 router.delete('/:id', checarToken, function(req, res) {
   let id = req.params.id;
-  let sqlDeletar = 'DELETE FROM demandas WHERE id = ' + id;
+  let sqlDeletar = 'DELETE FROM demandas WHERE id = ?';
 
-  db.query(sqlDeletar, function(erro, resultado) {
+  db.query(sqlDeletar, [id], function(erro, resultado) {
     if (erro) {
       console.log(erro);
-      return res.json({ ok: false });
+      return res.status(500).json({ ok: false, msg: 'erro ao deletar' });
     }
 
-    res.json({ ok: true, msg: 'deletado' });
+    if (resultado.affectedRows === 0) {
+      return res.status(404).json({ ok: false, msg: 'demanda nao encontrada' });
+    }
+
+    res.json({ ok: true, msg: 'demanda deletada com sucesso' });
   });
 });
 

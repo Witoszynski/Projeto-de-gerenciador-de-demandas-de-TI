@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Teste de LocalStorage - Chamados</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f0f0f0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1 { color: #333; }
+    .section {
+        margin: 20px 0;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-left: 4px solid #007bff;
+    }
+    button {
+        padding: 10px 15px;
+        margin: 5px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+    }
+    button:hover { background-color: #0056b3; }
+    button.danger {
+        background-color: #dc3545;
+    }
+    button.danger:hover {
+        background-color: #c82333;
+    }
+    textarea {
+        width: 100%;
+        height: 200px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-family: monospace;
+    }
+    .result {
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #e8f5e9;
+        border: 1px solid #4caf50;
+        border-radius: 4px;
+    }
+    .error {
+        background-color: #ffebee;
+        border: 1px solid #f44336;
+    }
+    code {
+        background-color: #f0f0f0;
+        padding: 2px 5px;
+        border-radius: 3px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🧪 Teste de LocalStorage - Chamados</h1>
+
+    <div class="section">
+        <h2>1️⃣ Ver dados no LocalStorage</h2>
+        <button onclick="verChamados()">Ver Chamados Salvos</button>
+        <textarea id="output"></textarea>
+    </div>
+
+    <div class="section">
+        <h2>2️⃣ Criar Chamado de Teste</h2>
+        <button onclick="criarChamadoTeste()">➕ Criar Chamado de Teste</button>
+        <div id="resultado"></div>
+    </div>
+
+    <div class="section">
+        <h2>3️⃣ Limpar Dados</h2>
+        <button class="danger" onclick="limparTudo()">🗑️ Limpar Todos os Chamados</button>
+        <button class="danger" onclick="limparLocalStorage()">🗑️ Limpar Todo o LocalStorage</button>
+    </div>
+
+    <div class="section">
+        <h2>4️⃣ Ações Rápidas</h2>
+        <button onclick="irParaAcompanhar()">➡️ Ir para Acompanhar</button>
+        <button onclick="irParaCliente()">➡️ Ir para Cliente (Nova Solicitação)</button>
+    </div>
+
+</div>
+
+<script>
+function verChamados() {
+    const chamados = JSON.parse(localStorage.getItem("chamados")) || [];
+    const output = document.getElementById("output");
+
+    output.value = "=== CHAMADOS NO LOCALSTORAGE ===\n\n";
+    output.value += "Total de chamados: " + chamados.length + "\n\n";
+    output.value += JSON.stringify(chamados, null, 2);
+
+    console.log("Chamados:", chamados);
+}
+
+function criarChamadoTeste() {
+    const chamado = {
+        id: Date.now(),
+        titulo: "TESTE - Chamado " + new Date().toLocaleTimeString(),
+        descricao: "Este é um chamado de teste criado em " + new Date().toLocaleString(),
+        categoria: "Teste",
+        gut: 75,
+        gravidade: 5,
+        urgencia: 3,
+        tendencia: 5,
+        prioridade: "Média",
+        status: "Aberto",
+        usuario: "teste",
+        dataCriacao: new Date().toLocaleString()
+    };
+
+    let chamados = JSON.parse(localStorage.getItem("chamados")) || [];
+    chamados.push(chamado);
+    localStorage.setItem("chamados", JSON.stringify(chamados));
+
+    const resultado = document.getElementById("resultado");
+    resultado.innerHTML = `
+        <div class="result">
+            ✅ <strong>Chamado de teste criado!</strong><br>
+            ID: ${chamado.id}<br>
+            Título: ${chamado.titulo}<br>
+            Total na lista: ${chamados.length}
+        </div>
+    `;
+
+    console.log("Chamado criado:", chamado);
+    console.log("Total agora:", chamados.length);
+}
+
+function limparTudo() {
+    if (!confirm("Tem certeza que deseja limpar TODOS os chamados?")) {
+        return;
+    }
+    localStorage.setItem("chamados", JSON.stringify([]));
+    document.getElementById("resultado").innerHTML = `
+        <div class="result">
+            🗑️ <strong>Todos os chamados foram deletados!</strong>
+        </div>
+    `;
+}
+
+function limparLocalStorage() {
+    if (!confirm("Tem certeza que deseja limpar TODO o localStorage? Vai perder login também!")) {
+        return;
+    }
+    localStorage.clear();
+    document.getElementById("resultado").innerHTML = `
+        <div class="result error">
+            🗑️ <strong>localStorage foi completamente limpo!</strong>
+        </div>
+    `;
+}
+
+function irParaAcompanhar() {
+    window.location.href = "acompanhar.html";
+}
+
+function irParaCliente() {
+    window.location.href = "cliente.html";
+}
+
+// Carregar ao abrir a página
+console.log("Página de teste carregada");
+verChamados();
+</script>
+
+</body>
+</html>

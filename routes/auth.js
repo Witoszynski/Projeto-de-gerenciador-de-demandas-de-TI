@@ -2,8 +2,10 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const db = require('../server');
 const router = express.Router();
+const { encryptDoubleDES, decryptDoubleDES, hashPassword, verifyPassword } = require('../utils/crypto');
 
-// Função para gerar token (repetida depois)
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || 'default-key-change-in-production-64bit';
+
 function gerarToken(id, email) {
   return jwt.sign(
     { id: id, email: email },
@@ -13,31 +15,25 @@ function gerarToken(id, email) {
 }
 
 // POST Login
-router.post('/login', function(req, res) {
+router.post('/login', async function(req, res) {
   let email = req.body.email;
   let senha = req.body.senha;
 
-  // Validação ruim
-  if (email == null) {
-    return res.status(400).json({ msg: 'email nao enviado' });
+  if (!email || email === '') {
+    return res.status(400).json({ msg: 'email nao enviado ou vazio' });
   }
 
-  if (senha == null) {
-    return res.status(400).json({ msg: 'senha nao enviada' });
+  if (!senha || senha === '') {
+    return res.status(400).json({ msg: 'senha nao enviada ou vazia' });
   }
 
-  if (email == '') {
-    return res.status(400).json({ msg: 'email vazio' });
-  }
+  // Criptografar email para buscar no banco
+  const encryptedEmail = encryptDoubleDES(email, ENCRYPTION_KEY);
 
-  if (senha == '') {
-    return res.status(400).json({ msg: 'senha vazia' });
-  }
+  // Usar prepared statement com placeholder
+  let queryLogin = "SELECT id, email, nome, senha FROM usuarios WHERE email = ?";
 
-  // SQL com concatenação direta (SQL Injection)
-  let queryLogin = "SELECT id, email, nome FROM usuarios WHERE email = '" + email + "' AND senha = '" + senha + "'";
-
-  db.query(queryLogin, function(erro, resultados) {
+  db.query(queryLogin, [encryptedEmail], async function(erro, resultados) {
     if (erro) {
       console.log('Erro na query: ' + erro);
       return res.status(500).json({ msg: 'erro ao buscar usuario' });
@@ -47,58 +43,81 @@ router.post('/login', function(req, res) {
       return res.status(401).json({ msg: 'usuario ou senha errado' });
     }
 
-    if (resultados.length > 0) {
+    try {
       let usuario = resultados[0];
 
+      // Verificar senha hasheada
+      const senhaCorreta = await verifyPassword(senha, usuario.senha);
+
+      if (!senhaCorreta) {
+        return res.status(401).json({ msg: 'usuario ou senha errado' });
+      }
+
+      // Descriptografar email para retornar
+      const emailDescriptografado = decryptDoubleDES(usuario.email, ENCRYPTION_KEY);
+
       // Gerar token
-      let token = jwt.sign(
-        { id: usuario.id, email: usuario.email },
-        process.env.JWT_SECRET,
-        { expiresIn: '24h' }
-      );
+      let token = gerarToken(usuario.id, emailDescriptografado);
 
       return res.json({
         sucesso: true,
         token: token,
         usuario_id: usuario.id,
-        usuario_email: usuario.email,
+        usuario_email: emailDescriptografado,
         usuario_nome: usuario.nome
       });
+    } catch (err) {
+      console.log('Erro ao verificar senha: ' + err);
+      return res.status(500).json({ msg: 'erro ao fazer login' });
     }
   });
 });
 
 // POST Register
-router.post('/register', function(req, res) {
+router.post('/register', async function(req, res) {
   let email = req.body.email;
   let senha = req.body.senha;
   let nome = req.body.nome;
 
-  // Validações repetidas e fracas
-  if (!email) return res.json({ ok: false, msg: 'email vazio' });
-  if (!senha) return res.json({ ok: false, msg: 'senha vazia' });
-  if (!nome) return res.json({ ok: false, msg: 'nome vazio' });
+  if (!email || email === '') {
+    return res.status(400).json({ ok: false, msg: 'email nao fornecido ou vazio' });
+  }
 
-  if (email == '') return res.json({ ok: false, msg: 'email vazio mesmo' });
-  if (senha == '') return res.json({ ok: false, msg: 'senha vazia mesmo' });
-  if (nome == '') return res.json({ ok: false, msg: 'nome vazio mesmo' });
+  if (!senha || senha === '') {
+    return res.status(400).json({ ok: false, msg: 'senha nao fornecida ou vazia' });
+  }
 
-  // Query com SQL Injection
-  let queryRegistro = "INSERT INTO usuarios (email, senha, nome) VALUES ('" + email + "', '" + senha + "', '" + nome + "')";
+  if (!nome || nome === '') {
+    return res.status(400).json({ ok: false, msg: 'nome nao fornecido ou vazio' });
+  }
 
-  db.query(queryRegistro, function(erro, resultado) {
-    if (erro) {
-      console.log('Erro ao registrar: ' + erro);
+  try {
+    // Hash da senha
+    const senhaHasheada = await hashPassword(senha);
 
-      if (erro.code == 'ER_DUP_ENTRY') {
-        return res.json({ ok: false, msg: 'email ja existe' });
+    // Criptografar email com Double DES
+    const emailCriptografado = encryptDoubleDES(email, ENCRYPTION_KEY);
+
+    // Usar prepared statement
+    let queryRegistro = "INSERT INTO usuarios (email, senha, nome) VALUES (?, ?, ?)";
+
+    db.query(queryRegistro, [emailCriptografado, senhaHasheada, nome], function(erro, resultado) {
+      if (erro) {
+        console.log('Erro ao registrar: ' + erro);
+
+        if (erro.code == 'ER_DUP_ENTRY') {
+          return res.status(409).json({ ok: false, msg: 'email ja existe' });
+        }
+
+        return res.status(500).json({ ok: false, msg: 'erro ao registrar usuario' });
       }
 
-      return res.json({ ok: false, msg: 'erro ao registrar usuario' });
-    }
-
-    return res.json({ ok: true, msg: 'usuario criado com sucesso' });
-  });
+      return res.status(201).json({ ok: true, msg: 'usuario criado com sucesso', usuario_id: resultado.insertId });
+    });
+  } catch (err) {
+    console.log('Erro ao hashear senha: ' + err);
+    return res.status(500).json({ ok: false, msg: 'erro ao registrar usuario' });
+  }
 });
 
 module.exports = router;

@@ -64,8 +64,22 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log("Chamado:", chamado);
             console.log("Total na lista:", chamados.length);
 
-            alert("✓ Chamado criado com sucesso!\nID: " + id + "\n\nVocê pode ver em 'Meus Chamados'");
-            form.reset();
+            // Verificar se foi realmente salvo
+            let verificar = JSON.parse(localStorage.getItem("chamados")) || [];
+            console.log("Verificação - Total no localStorage:", verificar.length);
+
+            // Disparar sincronização em tempo real
+            if (typeof sincronizarChamados === 'function') {
+                sincronizarChamados();
+                console.log("✓ Sincronização disparada!");
+            }
+
+            alert("✓ Chamado criado com sucesso!\nID: " + id);
+
+            // Aguardar um pouco e depois redirecionar
+            setTimeout(function() {
+                window.location.href = "acompanhar.html";
+            }, 500);
         });
     } else {
         console.error("❌ ERRO: Formulário não encontrado!");
